@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Maksimov | Quantum Genesis</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Портфолио Романа Максимова: исследования в области квантовой криптографии, симуляция протокола BB84 и защита данных в постквантовую эпоху.">
+    <meta name="keywords" content="квантовая криптография, QKD, BB84, Python, Three.js, кибербезопасность, Роман Максимов">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono&display=swap');
+        
+        :root {
+            --neon-cyan: #00bcd4;
+            --neon-green: #34d399;
+            --neon-red: #ff4d4d;
+            --dark-bg: #050505;
+            --card-bg: #0f0f0f;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: #e5e7eb;
+            scroll-behavior: smooth;
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            #canvas-container { width: 100%; height: 40%; top: 0; opacity: 0.4; position: relative; }
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #00bcd4, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-red {
+            background: linear-gradient(90deg, #ff4d4d, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Glitch Effect for Apocalypse Title */
+        .glitch-hover:hover {
+            animation: glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            text-shadow: 2px 0 var(--neon-red), -2px 0 var(--neon-cyan);
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes jitter {
+            0% { transform: translate(0,0); }
+            25% { transform: translate(-1px, 1px); }
+            50% { transform: translate(1px, -1px); }
+            75% { transform: translate(-1px, -1px); }
+            100% { transform: translate(1px, 1px); }
+        }
+
+        .quantum-term {
+            color: var(--neon-cyan);
+            font-weight: 700;
+            cursor: help;
+            display: inline-block;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .quantum-term:hover {
+            animation: jitter 0.1s infinite;
+            text-shadow: 2px 0 rgba(255, 0, 0, 0.5), -2px 0 rgba(0, 0, 255, 0.5);
+        }
+
+        .integrity-scanner {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--neon-green);
+            opacity: 0.8;
+        }
+
+        .academic-card {
+            background: linear-gradient(145deg, #0f0f0f, #151515);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .academic-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 188, 212, 0.2);
+        }
+
+        .btn-primary {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #fff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 2px solid var(--neon-cyan);
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .achievement-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-width: 4px;
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            position: relative;
+        }
+        .pulse-dot::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        /* Terminal Style */
+        .terminal-window {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 6px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+        }
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
+            border-bottom: 1px solid #333;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .red { background: #ff5f56; }
+        .yellow { background: #ffbd2e; }
+        .green { background: #27c93f; }
+        
+        .terminal-body {
+            padding: 15px;
+            height: 200px;
+            overflow-y: hidden;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .terminal-line { margin-bottom: 4px; }
+        .t-info { color: var(--neon-cyan); }
+        .t-success { color: var(--neon-green); }
+        .t-warn { color: #fbbf24; }
+
+        /* Step Card */
+        .step-card {
+            border-top: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .step-card:hover {
+            background: rgba(255,255,255,0.03);
+            border-top-color: var(--neon-cyan);
+        }
+
+        /* Quantum Animation Styles */
+        #photon-animation-container {
+            height: 160px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .photon-label {
+            position: absolute;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            font-family: 'JetBrains Mono';
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-black tracking-tighter cursor-default" id="nav-logo">
+                <span class="text-white" data-original="ROMAN">ROMAN</span><span style="color: var(--neon-cyan)" data-original="MAKSIMOV">MAKSIMOV</span>
+            </div>
+            <div class="hidden lg:block integrity-scanner mono uppercase">
+                Status: <span id="scan-text" class="text-glow-cyan">SCANNING FOR EAVESDROPPERS...</span> [OK]
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest text-gray-400">
+                <a href="#challenge" class="hover:text-white transition text-[10px]">The Challenge</a>
+                <a href="#how-it-works" class="hover:text-white transition text-[10px]">How it Works</a>
+                <a href="#academic" class="hover:text-white transition text-[10px]">R&D Showcase</a>
+                <a href="#awards" class="hover:text-white transition text-[10px]">Awards</a>
+                <a href="https://github.com/romaprogrammist" target="_blank" class="text-white" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div id="canvas-container"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full">
+            <div class="max-w-3xl">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="pulse-dot"></div>
+                    <div class="px-3 py-1 border border-emerald-500/30 rounded-full text-[#34d399] text-[10px] font-bold tracking-widest uppercase">
+                        Researcher | Python Developer | Grade 9
+                    </div>
+                </div>
+                
+                <h1 class="text-5xl md:text-8xl font-black leading-none mb-6 tracking-tight">
+                    Secure the <span class="gradient-text">Future</span>.
+                </h1>
+                
+                <p class="text-xl text-gray-400 mb-10 leading-relaxed max-w-xl">
+                    Разработка высокоточных симуляторов <span class="quantum-term">QKD</span> и анализ криптографической устойчивости к атакам на основе квантовых алгоритмов.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="document.getElementById('challenge').scrollIntoView({behavior:'smooth'})" class="px-8 py-4 btn-primary font-bold rounded-sm uppercase tracking-wider text-sm">
+                        EXPLORE PROJECT
+                    </button>
+                    <button onclick="launchSimulator()" class="px-8 py-4 border border-white/20 hover:border-white transition font-bold rounded-sm uppercase tracking-wider text-sm">
+                        LAUNCH SIMULATOR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: The Challenge -->
+    <section id="challenge" class="py-24 bg-black relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <h2 class="text-xs font-bold text-red-500 uppercase tracking-[0.3em]">The Security Threat</h2>
+                    <h3 class="text-4xl font-black uppercase"><span class="gradient-text-red glitch-hover cursor-pointer">Квантовый Апокалипсис</span></h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        С развитием квантовых компьютеров текущие методы шифрования (RSA, ECC, AES) станут уязвимыми. Алгоритм <span class="quantum-term">Шора</span> способен взломать ключи, на подбор которых у классических суперкомпьютеров ушли бы миллионы лет. Это ставит под угрозу банковские системы и государственные тайны.
+                    </p>
+                </div>
+                <div class="space-y-6 border-l border-white/10 pl-8 md:pl-16">
+                    <h2 class="text-xs font-bold text-emerald-500 uppercase tracking-[0.3em]">The Innovation</h2>
+                    <h3 class="text-4xl font-black uppercase text-white">QKD Решение</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Квантовое распределение ключей использует законы физики вместо математики. Согласно теореме о <span class="quantum-term">запрете клонирования</span>, любое измерение фотона злоумышленником изменит его состояние, что немедленно обнаружит вмешательство.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: How it Works (with Live Circuit) -->
+    <section id="how-it-works" class="py-24 bg-[#080808]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold text-cyan-400 uppercase tracking-[0.3em] mb-4">Architecture</h2>
+                <h3 class="text-4xl font-black uppercase">Как работает симуляция BB84</h3>
+            </div>
+
+            <!-- Live Photon Animation -->
+            <div id="photon-animation-container">
+                <div class="photon-label top-4 left-4">Alice (Station A)</div>
+                <div class="photon-label top-4 right-4">Bob (Station B)</div>
+                <div class="photon-label bottom-4 left-1/2 -translate-x-1/2" id="eve-status">Channel Monitor: Clear</div>
+                <svg id="photon-svg" viewBox="0 0 800 160" class="w-full h-full">
+                    <defs>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <!-- Path -->
+                    <line x1="100" y1="80" x2="700" y2="80" stroke="rgba(255,255,255,0.05)" stroke-width="2" stroke-dasharray="5,5" />
+                    <!-- Alice Node -->
+                    <circle cx="100" cy="80" r="10" fill="var(--neon-cyan)" />
+                    <!-- Bob Node -->
+                    <circle cx="700" cy="80" r="10" fill="var(--neon-green)" />
+                    <!-- Eve Node (Invisible initially) -->
+                    <g id="eve-node" opacity="0">
+                        <circle cx="400" cy="80" r="15" fill="none" stroke="var(--neon-red)" stroke-width="1" stroke-dasharray="2,2">
+                            <animate attributeName="r" values="12;18;12" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                        <text x="390" y="110" fill="var(--neon-red)" font-size="8" font-family="JetBrains Mono">EVE DETECTED</text>
+                    </g>
+                    <!-- Moving Photon -->
+                    <g id="photon">
+                        <circle r="4" fill="#fff" filter="url(#glow)">
+                            <animateMotion id="photon-motion" path="M 100 80 L 700 80" dur="3s" repeatCount="indefinite" />
+                        </circle>
+                        <path id="photon-arrow" d="M -6 -6 L 6 6 M -6 6 L 6 -6" stroke="var(--neon-cyan)" stroke-width="2">
+                            <animateTransform attributeName="transform" type="rotate" values="0;45;90;135;180" dur="3s" repeatCount="indefinite" />
+                        </path>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="p-6 academic-card rounded-xl step-card">
+                    <div class="text-3xl font-black text-white/10 mb-4">01</div>
+                    <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Alice</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Алиса генерирует случайную последовательность бит и выбирает случайные базисы (прямой или диагональный) для кодирования фотонов.</p>
+                </div>
+                <div class="p-6 academic-card rounded-xl step-card">
+                    <div class="text-3xl font-black text-white/10 mb-4">02</div>
+                    <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Quantum Link</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Передача квантовых состояний. В симуляторе учитывается <span class="quantum-term">дегеренция</span> и шум оптического волокна.</p>
+                </div>
+                <div class="p-6 academic-card rounded-xl step-card border-red-500/20 group cursor-pointer" onclick="toggleEve()">
+                    <div class="text-3xl font-black text-red-500/20 mb-4 group-hover:text-red-500/40 transition">03</div>
+                    <h4 class="font-bold text-red-400 mb-2 uppercase text-xs tracking-widest">Eve (Attack)</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Попытка перехвата (Intercept-Resend). Ева измеряет фотон, вызывая <span class="quantum-term">коллапс функции</span>, что вносит ошибки.</p>
+                </div>
+                <div class="p-6 academic-card rounded-xl step-card">
+                    <div class="text-3xl font-black text-white/10 mb-4">04</div>
+                    <h4 class="font-bold text-white mb-2 uppercase text-xs tracking-widest">Bob & Sifting</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Боб измеряет фотоны. Стороны сравнивают базисы по открытому каналу, оставляя только те биты, где базисы совпали.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- R&D Showcase with Terminal and Charts -->
+    <section id="academic" class="py-24 bg-[#050505]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <h2 class="text-xs font-bold text-cyan-400 uppercase tracking-[0.3em] mb-4">Research & Data</h2>
+                    <h3 class="text-4xl font-black uppercase tracking-tight">R&D Showcase</h3>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <!-- Chart Section -->
+                    <div class="bg-white/[0.02] p-8 rounded-2xl border border-white/5">
+                        <h4 class="text-xl font-bold mb-6 text-white">Статистика QBER</h4>
+                        <div class="h-[250px] w-full">
+                            <canvas id="qberChart"></canvas>
+                        </div>
+                        <p class="text-gray-500 text-[10px] mt-4 uppercase mono">Fig 1.1: Зависимость ошибок от внешнего вмешательства</p>
+                    </div>
+
+                    <div class="bg-white/[0.02] p-8 rounded-2xl border border-white/5">
+                        <h4 class="text-xl font-bold mb-6 text-white">Уровень ошибок (QBER)</h4>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                            Мой симулятор вычисляет квантовую вероятность ошибок. При отсутствии Евы <span class="text-emerald-400 font-bold">QBER составляет ~1%</span> (шум детектора). При попытке атаки Евой этот показатель <span class="text-red-400 font-bold">вырастает до 11-25%</span>.
+                        </p>
+                        
+                        <div class="overflow-hidden rounded-lg border border-white/10 text-xs uppercase mono">
+                            <div class="grid grid-cols-2 bg-white/5 p-3 font-bold border-b border-white/10">
+                                <div>Scenario</div>
+                                <div>Mean QBER</div>
+                            </div>
+                            <div class="grid grid-cols-2 p-3 border-b border-white/5">
+                                <div>Ideal Channel</div>
+                                <div class="text-emerald-400">0.0%</div>
+                            </div>
+                            <div class="grid grid-cols-2 p-3 border-b border-white/5">
+                                <div>Standard Fiber Noise</div>
+                                <div class="text-emerald-400">1.2%</div>
+                            </div>
+                            <div class="grid grid-cols-2 p-3 text-red-400 font-bold">
+                                <div>Eavesdropping Attack</div>
+                                <div>>11.0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terminal Display -->
+                <div class="flex flex-col">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                            <div class="text-[10px] text-gray-500 ml-4 mono uppercase">qkd-simulation-engine.py</div>
+                        </div>
+                        <div class="terminal-body mono" id="terminal-content">
+                            <!-- Logs will be inserted here -->
+                        </div>
+                    </div>
+                    <div class="mt-8 p-6 bg-cyan-400/5 border border-cyan-400/20 rounded-xl">
+                        <h4 class="text-cyan-400 font-bold uppercase text-[10px] mb-2 tracking-[0.2em]">Scientific Summary</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed italic">
+                            «Данное исследование демонстрирует применимость протокола BB84 для обеспечения информационной безопасности в постквантовую эпоху.»
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section id="awards" class="py-24 bg-black border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-12">
+                <h2 class="text-xs font-bold text-gray-500 uppercase tracking-[0.3em] mb-2">Evidence-Based Expertise</h2>
+                <h3 class="text-3xl font-black uppercase">Scientific Path & Awards</h3>
+            </div>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <span class="text-[10px] text-cyan-400 font-bold mb-2 block uppercase">Ноябрь 2025</span>
+                    <h4 class="text-white font-bold mb-1">Районная олимпиада по информатике</h4>
+                    <p class="text-xs text-gray-500">Диплом III степени. Решение алгоритмических задач высокого уровня сложности.</p>
+                </div>
+                <div class="achievement-item">
+                    <span class="text-[10px] text-emerald-400 font-bold mb-2 block uppercase">Март 2025</span>
+                    <h4 class="text-white font-bold mb-1">Областная олимпиада «Юный программист»</h4>
+                    <p class="text-xs text-gray-500">Диплом III степени. Разработка прикладного программного обеспечения.</p>
+                </div>
+                <div class="achievement-item">
+                    <span class="text-[10px] text-amber-400 font-bold mb-2 block uppercase">Январь 2026</span>
+                    <h4 class="text-white font-bold mb-1">100 идей для Беларуси</h4>
+                    <p class="text-xs text-gray-500 font-bold">Специальный приз жюри. Проект по квантовой криптографии признан одним из самых перспективных.</p>
+                </div>
+                <div class="achievement-item">
+                    <span class="text-[10px] text-purple-400 font-bold mb-2 block uppercase">2025</span>
+                    <h4 class="text-white font-bold mb-1">Районная олимпиада по физике</h4>
+                    <p class="text-xs text-gray-500">Диплом III степени. Глубокое понимание физических законов и оптики.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <h2 class="text-2xl font-black mb-2 text-white">Roman Maksimov</h2>
+                <p class="text-gray-500 text-sm mb-4">Building the foundations of quantum internet.</p>
+                <a href="mailto:rommaxcontact@gmail.com" class="inline-flex items-center space-x-3 text-cyan-400 hover:text-white transition mono text-sm">
+                    <i class="far fa-envelope"></i>
+                    <span>rommaxcontact@gmail.com</span>
+                </a>
+            </div>
+            <div class="flex space-x-6 text-xl">
+                <a href="https://www.linkedin.com/in/roman-maksimov-qkd/" target="_blank" class="text-gray-500 hover:text-cyan-400 transition" aria-label="LinkedIn Profile"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/romaprogrammist" target="_blank" class="text-gray-500 hover:text-white transition" aria-label="GitHub Repository"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <div class="mt-12 text-center text-[10px] text-gray-700 tracking-[0.4em] uppercase">
+            &copy; 2026 Roman Maksimov / Project Genesis
+        </div>
+    </footer>
+
+    <script>
+        let scene, camera, renderer, sphere;
+        let eveEnabled = false;
+
+        function launchSimulator() {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+
+            setTimeout(() => {
+                window.open('https://romaprogrammist.github.io/qkd-sim/', '_blank');
+            }, 150);
+        }
+
+        function toggleEve() {
+            eveEnabled = !eveEnabled;
+            const eveNode = document.getElementById('eve-node');
+            const eveStatus = document.getElementById('eve-status');
+            const photonArrow = document.getElementById('photon-arrow');
+            
+            if(eveEnabled) {
+                eveNode.setAttribute('opacity', '1');
+                eveStatus.innerText = "Channel Monitor: EAVESDROPPING DETECTED!";
+                eveStatus.style.color = "var(--neon-red)";
+                photonArrow.setAttribute('stroke', 'var(--neon-red)');
+            } else {
+                eveNode.setAttribute('opacity', '0');
+                eveStatus.innerText = "Channel Monitor: Clear";
+                eveStatus.style.color = "#666";
+                photonArrow.setAttribute('stroke', 'var(--neon-cyan)');
+            }
+        }
+
+        // Terminal Emulation
+        const terminalContent = document.getElementById('terminal-content');
+        const logs = [
+            { type: 'info', text: '> Initializing Quantum Source...' },
+            { type: 'info', text: '> Alice: Generating 1024-bit random sequence...' },
+            { type: 'info', text: '> Applying Z and X bases...' },
+            { type: 'success', text: '> [OK] Quantum Channel established.' },
+            { type: 'info', text: '> Bob: Commencing photon measurement...' },
+            { type: 'warn', text: '> [ALERT] Pulse intensity deviation detected!' },
+            { type: 'warn', text: '> [WARN] Analyzing potential Eavesdropping (Eve)...' },
+            { type: 'info', text: '> QBER Calculation: 0.1245...' },
+            { type: 'success', text: '> Sifting complete. Shared key secured.' }
+        ];
+        let currentLogIdx = 0;
+
+        function addTerminalLine() {
+            const log = logs[currentLogIdx];
+            const div = document.createElement('div');
+            div.className = `terminal-line t-${log.type}`;
+            div.innerText = log.text;
+            if (terminalContent) {
+                terminalContent.appendChild(div);
+                if (terminalContent.children.length > 8) {
+                    terminalContent.removeChild(terminalContent.firstChild);
+                }
+            }
+            currentLogIdx = (currentLogIdx + 1) % logs.length;
+            setTimeout(addTerminalLine, Math.random() * 2000 + 1000);
+        }
+
+        // Charts
+        function initCharts() {
+            const ctx = document.getElementById('qberChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['0km', '20km', '40km', '60km', '80km', '100km'],
+                    datasets: [{
+                        label: 'Normal QBER (%)',
+                        data: [0.5, 1.2, 2.1, 3.5, 5.2, 8.1],
+                        borderColor: '#34d399',
+                        tension: 0.4,
+                        borderWidth: 2
+                    }, {
+                        label: 'Eve Active (%)',
+                        data: [11.5, 12.8, 15.1, 18.5, 22.2, 28.5],
+                        borderColor: '#ff4d4d',
+                        tension: 0.4,
+                        borderDash: [5, 5],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666' } },
+                        x: { grid: { display: false }, ticks: { color: '#666' } }
+                    }
+                }
+            });
+        }
+
+        // Three.js Background with Perf Optimization
+        function initThree() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Performance Check & Geometry Quality Adjustment
+            let lastTime = performance.now();
+            let frames = 0;
+            let sphereDetail = 32;
+
+            const geo = new THREE.SphereGeometry(1.2, sphereDetail, sphereDetail);
+            const mat = new THREE.MeshBasicMaterial({ color: 0x00bcd4, wireframe: true, transparent: true, opacity: 0.08 });
+            sphere = new THREE.Mesh(geo, mat);
+            scene.add(sphere);
+
+            const innerGeo = new THREE.IcosahedronGeometry(0.5, 0);
+            const innerMat = new THREE.MeshBasicMaterial({ color: 0x34d399, wireframe: true, transparent: true, opacity: 0.3 });
+            const inner = new THREE.Mesh(innerGeo, innerMat);
+            sphere.add(inner);
+
+            camera.position.z = 2.5;
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Simple FPS monitor for LOD adjustment
+                frames++;
+                const time = performance.now();
+                if (time >= lastTime + 1000) {
+                    const fps = (frames * 1000) / (time - lastTime);
+                    if (fps < 30 && sphereDetail > 16) {
+                        // Reduce quality for performance
+                        sphereDetail = 16;
+                        sphere.geometry.dispose();
+                        sphere.geometry = new THREE.SphereGeometry(1.2, 16, 16);
+                    }
+                    frames = 0;
+                    lastTime = time;
+                }
+
+                sphere.rotation.y += 0.003;
+                sphere.rotation.x += 0.001;
+                inner.rotation.y -= 0.006;
+                renderer.render(scene, camera);
+            }
+            animate();
+            addTerminalLine();
+            initCharts();
+        }
+
+        window.onload = initThree;
+        window.onresize = () => {
+            const container = document.getElementById('canvas-container');
+            if (container && camera && renderer) {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        };
+
+        // Scan message loop
+        const scanMsg = document.getElementById('scan-text');
+        const phrases = ["SCANNING FOR EAVESDROPPERS...", "ANALYZING QUANTUM BASES...", "ENTANGLEMENT VERIFIED", "CHANNEL SECURED [AES-256]"];
+        let pIdx = 0;
+        if (scanMsg) {
+            setInterval(() => {
+                pIdx = (pIdx + 1) % phrases.length;
+                scanMsg.innerText = phrases[pIdx];
+            }, 4000);
+        }
+
+        // Logo Glitch Effect
+        const logo = document.getElementById('nav-logo');
+        const qChars = "01+x|ψ⟩";
+        if (logo) {
+            logo.addEventListener('mouseenter', () => {
+                const spans = logo.querySelectorAll('span');
+                spans.forEach(span => {
+                    const originalText = span.getAttribute('data-original');
+                    let count = 0;
+                    const int = setInterval(() => {
+                        span.innerText = originalText.split("").map((c, i) => {
+                            if (i < count) return originalText[i];
+                            return qChars[Math.floor(Math.random() * qChars.length)];
+                        }).join("");
+                        if (count >= originalText.length) clearInterval(int);
+                        count += 0.3;
+                    }, 40);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
