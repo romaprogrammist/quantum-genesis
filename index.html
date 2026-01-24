@@ -598,32 +598,72 @@
 
         function initCharts() {
             const ctx = document.getElementById('qberChart').getContext('2d');
+            
+            // Настройка градиентов для красоты
+            const gradientNormal = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientNormal.addColorStop(0, 'rgba(52, 211, 153, 0.2)');
+            gradientNormal.addColorStop(1, 'rgba(52, 211, 153, 0)');
+
+            const gradientAttack = ctx.createLinearGradient(0, 0, 0, 400);
+            gradientAttack.addColorStop(0, 'rgba(255, 77, 77, 0.2)');
+            gradientAttack.addColorStop(1, 'rgba(255, 77, 77, 0)');
+
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['0', '25', '50', '75', '100'],
+                    labels: ['0km', '10km', '25km', '50km', '75km', '100km'],
                     datasets: [{
-                        label: 'Normal',
-                        data: [0.5, 1.5, 2.5, 4.0, 7.0],
+                        label: 'Normal Channel (Noise only)',
+                        data: [0.5, 1.2, 2.1, 3.8, 5.2, 7.5], // Реалистичные данные шума в оптоволокне
                         borderColor: '#34d399',
+                        backgroundColor: gradientNormal,
+                        fill: true,
                         tension: 0.4,
-                        borderWidth: 2
+                        borderWidth: 3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#34d399'
                     }, {
-                        label: 'Attack',
-                        data: [11.5, 13.0, 16.0, 20.0, 26.0],
+                        label: 'Eavesdropping (Eve Attack)',
+                        data: [25.0, 25.8, 27.2, 29.5, 32.1, 35.0], // При атаке Intercept-Resend ошибка всегда > 25%
                         borderColor: '#ff4d4d',
+                        backgroundColor: gradientAttack,
+                        fill: true,
                         tension: 0.4,
+                        borderWidth: 3,
                         borderDash: [5, 5],
-                        borderWidth: 2
+                        pointRadius: 4,
+                        pointBackgroundColor: '#ff4d4d'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: { color: '#999', font: { family: 'JetBrains Mono', size: 10 } }
+                        },
+                        tooltip: {
+                            backgroundColor: '#0f0f0f',
+                            titleFont: { family: 'JetBrains Mono' },
+                            bodyFont: { family: 'JetBrains Mono' },
+                            callbacks: {
+                                label: (context) => ` QBER: ${context.parsed.y}%`
+                            }
+                        }
+                    },
                     scales: {
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666', font: { size: 9 } } },
-                        x: { grid: { display: false }, ticks: { color: '#666', font: { size: 9 } } }
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'QBER (%)', color: '#666' },
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#666', font: { size: 9 } }
+                        },
+                        x: {
+                            title: { display: true, text: 'Distance', color: '#666' },
+                            grid: { display: false },
+                            ticks: { color: '#666', font: { size: 9 } }
+                        }
                     }
                 }
             });
@@ -706,3 +746,4 @@
     </script>
 </body>
 </html>
+
