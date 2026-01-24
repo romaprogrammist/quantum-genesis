@@ -602,10 +602,11 @@
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['№1', '№2', '№3', '№4', '№5', '№6', '№7', '№8'],
+                    labels: ['№1', '№2', '№3', '№4', '№5', '№6', '№7', '№8', '№9', '№10'],
                     datasets: [{
                         label: 'Уровень QBER (%)',
-                        data: [1.1, 0.9, 25.4, 26.1, 1.2, 0.8, 24.9, 1.0], 
+                        // Данные со скрытыми атаками (12% и 15%) и грубым взломом (25%)
+                        data: [1.1, 0.9, 12.0, 1.2, 25.4, 0.8, 15.0, 1.1, 26.1, 0.9], 
                         borderColor: '#00bcd4',
                         backgroundColor: 'rgba(0, 188, 212, 0.1)',
                         fill: true,
@@ -614,16 +615,16 @@
                         pointRadius: 6,
                         pointBackgroundColor: (context) => {
                             const val = context.dataset.data[context.dataIndex];
+                            // Порог 11% - все что выше становится красным
                             return val > 11 ? '#ff4d4d' : '#34d399';
                         }
                     }, {
-                        // Вот та самая полоска на 11%
                         label: 'Порог безопасности (11%)',
-                        data: [11, 11, 11, 11, 11, 11, 11, 11],
+                        data: Array(10).fill(11), // Автоматически заполняет линию на 11% для всех 10 точек
                         borderColor: 'rgba(255, 77, 77, 0.6)',
-                        borderDash: [5, 5], // Пунктирная линия
+                        borderDash: [5, 5],
                         borderWidth: 2,
-                        pointRadius: 0, // Без точек на самой линии
+                        pointRadius: 0,
                         fill: false
                     }]
                 },
@@ -641,7 +642,9 @@
                             callbacks: {
                                 title: (items) => {
                                     const val = items[0].parsed.y;
-                                    return val > 11 ? '⚠️ СТАТУС: АТАКА' : '✅ СТАТУС: НОРМА';
+                                    if (val > 20) return '⚠️ КРИТИЧЕСКИЙ ВЗЛОМ';
+                                    if (val > 11) return '⚠️ СКРЫТАЯ АТАКА (QBER > 11%)';
+                                    return '✅ СТАТУС: НОРМА';
                                 },
                                 label: (context) => ` QBER: ${context.parsed.y}%`
                             }
@@ -656,7 +659,7 @@
                             ticks: { color: '#666' }
                         },
                         x: {
-                            title: { display: true, text: 'Порядковый номер измерения', color: '#666' },
+                            title: { display: true, text: 'Сеансы связи', color: '#666' },
                             grid: { display: false },
                             ticks: { color: '#666' }
                         }
@@ -742,6 +745,7 @@
     </script>
 </body>
 </html>
+
 
 
 
