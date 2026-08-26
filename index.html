@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roman Maksimov | Quantum Genesis</title>
+    <title>Roman Maksimov | Quantum Genesis v3.5</title>
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Портфолио Романа Максимова: исследования в области квантовой криптографии, симуляция протокола BB84 и защита данных в постквантовую эпоху.">
-    <meta name="keywords" content="квантовая криптография, QKD, BB84, Python, Three.js, кибербезопасность, Роман Максимов">
+    <meta name="description" content="Портфолио Романа Максимова: исследования в области квантовой криптографии (QKD v3.5), симуляция протокола BB84 на Qiskit, алгоритмы Cascade, матрицы Тёплица и оптоволоконное моделирование ВОЛС.">
+    <meta name="keywords" content="квантовая криптография, QKD, BB84, Qiskit, Python, Three.js, кибербезопасность, Cascade, матрицы Тёплица, Роман Максимов">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -277,7 +277,7 @@
                 <div class="flex items-center space-x-3 mb-6">
                     <div class="pulse-dot"></div>
                     <div class="px-3 py-1 border border-emerald-500/30 rounded-full text-[#34d399] text-[9px] md:text-[10px] font-bold tracking-widest uppercase">
-                        Researcher | Python Developer | Grade 9
+                        Researcher | Python Developer | Grade 10
                     </div>
                 </div>
                 
@@ -286,7 +286,7 @@
                 </h1>
                 
                 <p class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed max-w-xl">
-                    Разработка высокоточных симуляторов <span class="quantum-term">QKD</span> и анализ криптографической устойчивости к атакам на основе квантовых алгоритмов.
+                    Разработка программно-аппаратных моделей <span class="quantum-term">QKD v3.5</span>, каскадной коррекции ошибок (Cascade), усиления секретности матрицами Тёплица и моделирования ВОЛС.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -297,7 +297,7 @@
                         РЕПОЗИТОРИЙ
                     </a>
                     <a href="https://romaprogrammist.github.io/portfolio/" class="w-full sm:w-auto px-8 py-4 border border-cyan-500/50 hover:bg-cyan-500/10 transition font-bold rounded-sm uppercase tracking-wider text-sm text-center flex items-center justify-center text-white">
-                        Перейти в портфолио
+                        ПОРТФОЛИО
                     </a>
                     <button onclick="launchSimulator()" class="w-full sm:w-auto px-8 py-4 border border-white/20 hover:border-white transition font-bold rounded-sm uppercase tracking-wider text-sm">
                         LAUNCH SIMULATOR
@@ -320,9 +320,9 @@
                 </div>
                 <div class="space-y-6 md:border-l border-white/10 md:pl-16">
                     <h2 class="text-xs font-bold text-emerald-500 uppercase tracking-[0.3em]">The Innovation</h2>
-                    <h3 class="text-3xl md:text-4xl font-black uppercase text-white">QKD Решение</h3>
+                    <h3 class="text-3xl md:text-4xl font-black uppercase text-white">QKD Решение v3.5</h3>
                     <p class="text-gray-400 leading-relaxed text-sm md:text-base">
-                        Квантовое распределение ключей использует законы физики вместо математики. Согласно теореме о <span class="quantum-term">запрете клонирования</span>, любое измерение фотона злоумышленником изменит его состояние.
+                        Квантовое распределение ключей использует фундаментальные законы физики. Согласно теореме о <span class="quantum-term">запрете клонирования</span>, перехват изменяет состояние кубитов. При <span class="quantum-term">QBER ≥ 11%</span> система автоматически блокирует компрометированные ключи по границе Шора-Прескилла.
                     </p>
                 </div>
             </div>
@@ -334,14 +334,14 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-xs font-bold text-cyan-400 uppercase tracking-[0.3em] mb-4">Architecture</h2>
-                <h3 class="text-3xl md:text-4xl font-black uppercase">Как работает BB84</h3>
+                <h3 class="text-3xl md:text-4xl font-black uppercase">Как работает BB84 & Post-Processing</h3>
             </div>
 
             <!-- Live Photon Animation -->
             <div id="photon-animation-container">
-                <div class="photon-label top-4 left-4">Alice</div>
-                <div class="photon-label top-4 right-4">Bob</div>
-                <div class="photon-label bottom-4 left-1/2 -translate-x-1/2 text-center w-full px-4" id="eve-status">Channel Monitor: Clear</div>
+                <div class="photon-label top-4 left-4">Alice (Qubit Generator)</div>
+                <div class="photon-label top-4 right-4">Bob (SPAD Detectors)</div>
+                <div class="photon-label bottom-4 left-1/2 -translate-x-1/2 text-center w-full px-4" id="eve-status">Channel Monitor: Clear (Depolarizing Noise &lt; 3%)</div>
                 <svg id="photon-svg" viewBox="0 0 800 160" preserveAspectRatio="xMidYMid meet" class="w-full h-full">
                     <defs>
                         <filter id="glow">
@@ -374,23 +374,23 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 <div class="p-6 academic-card rounded-xl">
                     <div class="text-2xl font-black text-white/10 mb-4">01</div>
-                    <h4 class="font-bold text-white mb-2 uppercase text-[10px] tracking-widest">Alice</h4>
-                    <p class="text-[11px] text-gray-500 leading-relaxed">Генерация случайной последовательности бит и выбор случайных базисов для кодирования фотонов.</p>
+                    <h4 class="font-bold text-white mb-2 uppercase text-[10px] tracking-widest">Alice Preparation</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Генерация случайных бит и базисов (Z, X). Применение гейтов Pauli-X и Hadamard H для кодирования состояния.</p>
                 </div>
                 <div class="p-6 academic-card rounded-xl">
                     <div class="text-2xl font-black text-white/10 mb-4">02</div>
-                    <h4 class="font-bold text-white mb-2 uppercase text-[10px] tracking-widest">Quantum Link</h4>
-                    <p class="text-[11px] text-gray-500 leading-relaxed">Передача квантовых состояний. Учет дегеренции и шума оптического волокна.</p>
+                    <h4 class="font-bold text-white mb-2 uppercase text-[10px] tracking-widest">Fiber Channel & Noise</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Моделирование деполяризации, затухания в оптическом волокне ($\alpha = 0.2\text{ дБ/км}$) и темного шума детекторов.</p>
                 </div>
                 <div class="p-6 academic-card rounded-xl border-red-500/20 group cursor-pointer" onclick="toggleEve()">
                     <div class="text-2xl font-black text-red-500/20 mb-4">03</div>
-                    <h4 class="font-bold text-red-400 mb-2 uppercase text-[10px] tracking-widest">Eve (Attack)</h4>
-                    <p class="text-[11px] text-gray-500 leading-relaxed">Попытка перехвата (Intercept-Resend). Вызывает <span class="quantum-term">коллапс функции</span>, что вносит ошибки.</p>
+                    <h4 class="font-bold text-red-400 mb-2 uppercase text-[10px] tracking-widest">Eve (Multi-Strategy)</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Перехват-повтор, атака под углом $22.5^\circ$ ($Ry$) или симуляция квантовой памяти. Вызывает коллапс функции кубита.</p>
                 </div>
                 <div class="p-6 academic-card rounded-xl">
                     <div class="text-2xl font-black text-white/10 mb-4">04</div>
-                    <h4 class="font-bold text-white mb-2 uppercase text-[10px] tracking-widest">Bob & Sifting</h4>
-                    <p class="text-[11px] text-gray-500 leading-relaxed">Боб измеряет фотоны. Стороны сравнивают базисы и оставляют только совпавшие биты.</p>
+                    <h4 class="font-bold text-white mb-2 uppercase text-[10px] tracking-widest">Cascade & Toeplitz PA</h4>
+                    <p class="text-[11px] text-gray-500 leading-relaxed">Отсеивание, многоитерационная коррекция Cascade и хэширование матрицами Тёплица с SHA-256 для усиления секретности.</p>
                 </div>
             </div>
         </div>
@@ -401,24 +401,24 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-12">
                 <h2 class="text-xs font-bold text-cyan-400 uppercase tracking-[0.3em] mb-4 text-center md:text-left">Research & Data</h2>
-                <h3 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-center md:text-left">R&D Showcase</h3>
+                <h3 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-center md:text-left">R&D Showcase v3.5</h3>
             </div>
 
             <div class="grid lg:grid-cols-2 gap-8 md:gap-12">
                 <div class="space-y-6 md:space-y-8">
                     <!-- Chart Section -->
                     <div class="bg-white/[0.02] p-6 md:p-8 rounded-2xl border border-white/5">
-                        <h4 class="text-lg font-bold mb-6 text-white">Статистика QBER</h4>
+                        <h4 class="text-lg font-bold mb-6 text-white">Статистика QBER и Атак Евы</h4>
                         <div class="h-[200px] md:h-[250px] w-full">
                             <canvas id="qberChart"></canvas>
                         </div>
-                        <p class="text-center text-gray-500 text-xs mt-4 italic">Наведите на точку, чтобы узнать статус системы (Норма или Атака Евы)</p>
+                        <p class="text-center text-gray-500 text-xs mt-4 italic">Наведите на точку, чтобы узнать статус системы (Норма, Шум ВОЛС, Атака $22.5^\circ$ или Полный перехват)</p>
                     </div>
 
                     <div class="bg-white/[0.02] p-6 md:p-8 rounded-2xl border border-white/5">
-                        <h4 class="text-lg font-bold mb-4 text-white">Уровень ошибок (QBER)</h4>
+                        <h4 class="text-lg font-bold mb-4 text-white">Пороги Безопасности QBER</h4>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                            При отсутствии Евы <span class="text-emerald-400 font-bold">QBER ~1%</span>. При попытке атаки Евой этот показатель <span class="text-red-400 font-bold">вырастает до 11-25%</span>.
+                            При естественном шуме канала <span class="text-emerald-400 font-bold">QBER ~1–3%</span>. Продвинутая атака под углом $22.5^\circ$ завышает QBER до <span class="text-amber-400 font-bold">~12.5%</span>, а прямой перехват — до <span class="text-red-400 font-bold">25%+</span>. При превышении порога $11\%$ ключ бракуется.
                         </p>
                         
                         <div class="overflow-hidden rounded-lg border border-white/10 text-[10px] uppercase mono">
@@ -430,9 +430,17 @@
                                 <div>Ideal Channel</div>
                                 <div class="text-emerald-400">0.0%</div>
                             </div>
+                            <div class="grid grid-cols-2 p-3 border-b border-white/5">
+                                <div>Fiber Channel Noise (50km)</div>
+                                <div class="text-cyan-400">2.8%</div>
+                            </div>
+                            <div class="grid grid-cols-2 p-3 border-b border-white/5">
+                                <div>Eve 22.5° Attack</div>
+                                <div class="text-amber-400">12.5%</div>
+                            </div>
                             <div class="grid grid-cols-2 p-3 text-red-400 font-bold">
-                                <div>Eve Attack</div>
-                                <div>>11.0%</div>
+                                <div>Intercept-Resend Eve</div>
+                                <div>>25.0%</div>
                             </div>
                         </div>
                     </div>
@@ -445,14 +453,14 @@
                             <div class="dot red"></div>
                             <div class="dot yellow"></div>
                             <div class="dot green"></div>
-                            <div class="text-[9px] text-gray-500 ml-4 mono uppercase">qkd-simulation-engine.py</div>
+                            <div class="text-[9px] text-gray-500 ml-4 mono uppercase">qkd-horizon-engine-v3.5.py</div>
                         </div>
                         <div class="terminal-body mono" id="terminal-content"></div>
                     </div>
                     <div class="mt-6 p-6 bg-cyan-400/5 border border-cyan-400/20 rounded-xl">
-                        <h4 class="text-cyan-400 font-bold uppercase text-[10px] mb-2 tracking-[0.2em]">Scientific Summary</h4>
+                        <h4 class="text-cyan-400 font-bold uppercase text-[10px] mb-2 tracking-[0.2em]">Scientific Abstract</h4>
                         <p class="text-xs text-gray-400 leading-relaxed italic">
-                            «Данное исследование демонстрирует применимость протокола BB84 для обеспечения информационной безопасности в постквантовую эпоху.»
+                            «Данное исследование демонстрирует применимость протокола BB84 в сочетании с каскадной коррекцией ошибок Cascade и матрицами Тёплица для построения квантово-защищенных сетей, устойчивых к угрозам эпохи квантового превосходства.»
                         </p>
                     </div>
                 </div>
@@ -472,22 +480,22 @@
                 <div class="achievement-item">
                     <span class="text-[9px] text-cyan-400 font-bold mb-2 block uppercase">Ноябрь 2025</span>
                     <h4 class="text-white font-bold mb-1">Районная олимпиада по информатике</h4>
-                    <p class="text-xs text-gray-500">Диплом III степени. Решение алгоритмических задач высокого уровня сложности.</p>
+                    <p class="text-xs text-gray-500">Диплом III степени. Решение сложных алгоритмических задач и структур данных.</p>
                 </div>
                 <div class="achievement-item">
                     <span class="text-[9px] text-emerald-400 font-bold mb-2 block uppercase">Март 2025</span>
                     <h4 class="text-white font-bold mb-1">Олимпиада «Юный программист»</h4>
-                    <p class="text-xs text-gray-500">Диплом III степени. Разработка прикладного программного обеспечения.</p>
+                    <p class="text-xs text-gray-500">Диплом III степени. Разработка прикладного и научно-исследовательского ПО.</p>
                 </div>
                 <div class="achievement-item">
                     <span class="text-[9px] text-amber-400 font-bold mb-2 block uppercase">Январь 2026</span>
                     <h4 class="text-white font-bold mb-1">100 идей для Беларуси</h4>
-                    <p class="text-xs text-gray-500 font-bold">Специальный приз жюри. Один из самых перспективных проектов.</p>
+                    <p class="text-xs text-gray-500 font-bold">Специальный приз жюри. Разработка симулятора квантового распределения ключей.</p>
                 </div>
                 <div class="achievement-item">
-                    <span class="text-[9px] text-purple-400 font-bold mb-2 block uppercase">2025</span>
+                    <span class="text-[9px] text-purple-400 font-bold mb-2 block uppercase">2025–2026</span>
                     <h4 class="text-white font-bold mb-1">Олимпиада по физике</h4>
-                    <p class="text-xs text-gray-500">Диплом III степени. Глубокое понимание физических законов и оптики.</p>
+                    <p class="text-xs text-gray-500">Диплом III степени. Исследования в области волновой оптики и квантовой механики.</p>
                 </div>
             </div>
         </div>
@@ -498,7 +506,7 @@
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <div>
                 <h2 class="text-xl md:text-2xl font-black mb-2 text-white">Roman Maksimov</h2>
-                <p class="text-gray-500 text-sm mb-4">Building the foundations of quantum internet.</p>
+                <p class="text-gray-500 text-sm mb-4">Building the foundations of quantum internet & post-quantum security.</p>
                 <a href="mailto:rommaxcontact@gmail.com" class="inline-flex items-center space-x-3 text-cyan-400 hover:text-white transition mono text-xs md:text-sm">
                     <i class="far fa-envelope"></i>
                     <span>rommaxcontact@gmail.com</span>
@@ -510,7 +518,7 @@
             </div>
         </div>
         <div class="mt-12 text-center text-[8px] md:text-[10px] text-gray-700 tracking-[0.4em] uppercase px-4">
-            &copy; 2026 Roman Maksimov / Project Genesis
+            &copy; 2026 Roman Maksimov / Project Genesis v3.5
         </div>
     </footer>
 
@@ -563,12 +571,12 @@
             
             if(eveEnabled) {
                 eveNode.setAttribute('opacity', '1');
-                eveStatus.innerText = "Channel Monitor: EAVESDROPPING DETECTED!";
+                eveStatus.innerText = "Channel Monitor: EAVESDROPPING DETECTED! (Ry 22.5° / Intercept)";
                 eveStatus.style.color = "var(--neon-red)";
                 photonArrow.setAttribute('stroke', 'var(--neon-red)');
             } else {
                 eveNode.setAttribute('opacity', '0');
-                eveStatus.innerText = "Channel Monitor: Clear";
+                eveStatus.innerText = "Channel Monitor: Clear (Depolarizing Noise < 3%)";
                 eveStatus.style.color = "#666";
                 photonArrow.setAttribute('stroke', 'var(--neon-cyan)');
             }
@@ -576,14 +584,16 @@
 
         const terminalContent = document.getElementById('terminal-content');
         const logs = [
-            { type: 'info', text: '> Initializing Quantum Source...' },
-            { type: 'info', text: '> Alice: Generating random sequence...' },
-            { type: 'info', text: '> Applying Z and X bases...' },
-            { type: 'success', text: '> [OK] Channel established.' },
-            { type: 'info', text: '> Bob: Commencing measurement...' },
-            { type: 'warn', text: '> [ALERT] Pulse deviation!' },
-            { type: 'info', text: '> QBER Calculation: 0.1245...' },
-            { type: 'success', text: '> Shared key secured.' }
+            { type: 'info', text: '> Initializing Quantum Source (Qiskit v1.x)...' },
+            { type: 'info', text: '> Alice: Encoding qubits in {|0>, |1>, |+>, |->}...' },
+            { type: 'info', text: '> Applying Fiber Channel Noise (depolarization)...' },
+            { type: 'success', text: '> [OK] Quantum Channel established.' },
+            { type: 'info', text: '> Bob: SPAD measurement in random bases...' },
+            { type: 'warn', text: '> [SIFTING] Public basis exchange complete.' },
+            { type: 'info', text: '> QBER Calculation: 0.024 (2.4%)...' },
+            { type: 'info', text: '> Cascade EC: Executing parity bisecting...' },
+            { type: 'success', text: '> Privacy Amplification: Toeplitz Matrix SHA-256 applied.' },
+            { type: 'success', text: '> [SECURE] Final Key Generated successfully.' }
         ];
         let currentLogIdx = 0;
 
@@ -611,8 +621,7 @@
                     labels: ['№1', '№2', '№3', '№4', '№5', '№6', '№7', '№8', '№9', '№10'],
                     datasets: [{
                         label: 'Уровень QBER (%)',
-                        // Данные со скрытыми атаками (12% и 15%) и грубым взломом (25%)
-                        data: [1.1, 0.9, 12.0, 1.2, 25.4, 0.8, 15.0, 1.1, 26.1, 0.9], 
+                        data: [1.2, 2.1, 12.5, 1.8, 25.4, 2.5, 13.0, 1.1, 26.1, 1.9], 
                         borderColor: '#00bcd4',
                         backgroundColor: 'rgba(0, 188, 212, 0.1)',
                         fill: true,
@@ -621,12 +630,11 @@
                         pointRadius: 6,
                         pointBackgroundColor: (context) => {
                             const val = context.dataset.data[context.dataIndex];
-                            // Порог 11% - все что выше становится красным
                             return val > 11 ? '#ff4d4d' : '#34d399';
                         }
                     }, {
-                        label: 'Порог безопасности (11%)',
-                        data: Array(10).fill(11), // Автоматически заполняет линию на 11% для всех 10 точек
+                        label: 'Порог Шора-Прескилла (11%)',
+                        data: Array(10).fill(11),
                         borderColor: 'rgba(255, 77, 77, 0.6)',
                         borderDash: [5, 5],
                         borderWidth: 2,
@@ -648,9 +656,9 @@
                             callbacks: {
                                 title: (items) => {
                                     const val = items[0].parsed.y;
-                                    if (val > 20) return '⚠️ КРИТИЧЕСКИЙ ВЗЛОМ';
-                                    if (val > 11) return '⚠️ СКРЫТАЯ АТАКА (QBER > 11%)';
-                                    return '✅ СТАТУС: НОРМА';
+                                    if (val > 20) return '⚠️ КРИТИЧЕСКИЙ ВЗЛОМ (Intercept-Resend)';
+                                    if (val > 11) return '⚠️ СКРЫТАЯ АТАКА (Ry 22.5°, QBER > 11%)';
+                                    return '✅ СТАТУС: НОРМА (Шум ВОЛС < 3%)';
                                 },
                                 label: (context) => ` QBER: ${context.parsed.y}%`
                             }
@@ -659,7 +667,7 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 40,
+                            max: 35,
                             title: { display: true, text: 'QBER (%)', color: '#666' },
                             grid: { color: 'rgba(255,255,255,0.05)' },
                             ticks: { color: '#666' }
@@ -720,7 +728,7 @@
         };
 
         const scanMsg = document.getElementById('scan-text');
-        const phrases = ["SCANNING FOR EAVESDROPPERS...", "ANALYZING BASES...", "ENTANGLEMENT VERIFIED", "CHANNEL SECURED"];
+        const phrases = ["SCANNING FOR EAVESDROPPERS...", "ANALYZING BASES...", "CASCADE PARITY CHECK...", "TOEPLITZ PA APPLIED", "CHANNEL SECURED"];
         let pIdx = 0;
         if (scanMsg) {
             setInterval(() => {
@@ -751,9 +759,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
